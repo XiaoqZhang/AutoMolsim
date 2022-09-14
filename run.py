@@ -2,6 +2,7 @@ import hydra
 from omegaconf import DictConfig, OmegaConf
 from src.cells import *
 from src.raspa import *
+from src.script import *
 import os
 import shutil
 
@@ -53,6 +54,12 @@ def run(cfg: DictConfig) -> None:
                 MoleculeDefinition = cfg.task.MoleculeDefinition
             )
             with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
+                fo.write(str_out)
+        
+        # prepare shell script
+        if cfg.machine.name == "local":
+            str_out = local(cfg.machine.raspa_dir)
+            with open(os.path.join(sim_dir, "run.sh"), "w") as fo:
                 fo.write(str_out)
 
 if __name__ == "__main__":

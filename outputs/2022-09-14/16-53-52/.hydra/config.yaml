@@ -1,0 +1,17 @@
+cif_dir: /home/xiaoqi/molsim/nature_cif_deduplicated
+out_dir: /home/xiaoqi/molsim/co2_nvt_deduplicated
+machine:
+  name: local
+  raspa_dir: /home/xiaoqi/RASPA/simulations/
+task:
+  name: nvt
+  block: false
+  molecule: CO2
+  NumberOfCycles: 10000
+  NumberOfInitializationCycles: 6000
+  Forcefield: UFFTraPPE
+  CutOffVDW: 12.8
+  ExternalTemperature: 298
+  Movies: true
+  WriteMoviesEvery: 1
+  MoleculeDefinition: UFFTraPPE
