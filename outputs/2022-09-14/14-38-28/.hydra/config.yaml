@@ -1,0 +1,16 @@
+machine:
+  raspa_dir: /home/xiaoqi/RASPA/simulations/
+task:
+  name: nvt
+  block: false
+  molecule: co2
+  NumberOfCycles: 6000
+  NumberOfInitializationCycles: 4000
+  Forcefield: UFF
+  CutOffVDW: 12.8
+  ExternalTemperature: 298
+  Movies: true
+  WriteMoviesEvery: 1
+  MoleculeDefinition: TraPPE
+cif_dir: ./test_cif
+out_dir: ./test_out

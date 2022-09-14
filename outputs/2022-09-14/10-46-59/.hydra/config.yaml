@@ -1,0 +1,10 @@
+machine:
+  raspa_dir: /home/xiaoqi/RASPA/simulations/bin
+task:
+  block: yes/no
+  molecule: co2
+  T_ads: 298
+  T_des: 363
+  P_ads: 100000
+  P_des: 10000
+  cycles: 10000

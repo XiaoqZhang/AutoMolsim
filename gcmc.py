@@ -5,9 +5,6 @@ import numpy as np
 import math
 
 
-
-
-
 # Calculate the minimum unit cells needed for GCMC simulation
 def cell_units(lens, angs, co):
     # lens and cutoff (co) are given in A and angs in degrees

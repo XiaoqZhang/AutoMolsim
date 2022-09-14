@@ -1,0 +1,13 @@
+name: nvt
+block: no
+molecule: CO2
+
+NumberOfCycles: 10000
+NumberOfInitializationCycles: 6000
+Forcefield: UFFTraPPE
+CutOffVDW: 12.8
+ExternalTemperature: 298
+Movies: yes
+WriteMoviesEvery: 1
+
+MoleculeDefinition: UFFTraPPE
