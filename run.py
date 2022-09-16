@@ -1,13 +1,19 @@
 import hydra
 from omegaconf import DictConfig, OmegaConf
-from src.cells import *
-from src.raspa import *
-from src.script import *
+
 import os
 import shutil
 
+from src.cells import *
+from src.raspa import *
+from src.script import *
+
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def run(cfg: DictConfig) -> None:
+     
+    assert cfg.machine.name in ["local", "fidis"], "Unknown machine!"
+    assert cfg.task.name in ["henry", "nvt"], "Unknown task!"
+
     # create output directory
     if not os.path.exists(cfg.out_dir):
         os.mkdir(cfg.out_dir) 
@@ -37,28 +43,28 @@ def run(cfg: DictConfig) -> None:
         else:
             block = "no"
     
-        # run molsim
+        # prepare simulation.input
         if cfg.task.name == "nvt":
             print("Generating simulation input for %s" %structure)
             str_out = nvt(
                 structure = structure,
                 unitcell = unitcell,
-                molecule = cfg.task.molecule,
-                NumberOfCycles = cfg.task.NumberOfCycles,
-                NumberOfInitializationCycles = cfg.task.NumberOfInitializationCycles,
-                Forcefield = cfg.task.Forcefield,
-                CutOffVDW = cfg.task.CutOffVDW,
-                ExternelTemperature = cfg.task.ExternalTemperature,
-                Movies = cfg.task.Movies,
-                WriteMoviesEvery = cfg.task.WriteMoviesEvery,
-                MoleculeDefinition = cfg.task.MoleculeDefinition
+                **cfg.task
             )
+            with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
+                fo.write(str_out)
+        elif cfg.task.name == "henry":
+            str_out = henry(structure, unitcell, **cfg.task)
             with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
                 fo.write(str_out)
         
         # prepare shell script
         if cfg.machine.name == "local":
-            str_out = local(cfg.machine.raspa_dir)
+            str_out = local(**cfg.machine)
+            with open(os.path.join(sim_dir, "run.sh"), "w") as fo:
+                fo.write(str_out)
+        elif cfg.machine.name == "fidis":
+            str_out = fidis(**cfg.machine)
             with open(os.path.join(sim_dir, "run.sh"), "w") as fo:
                 fo.write(str_out)
 

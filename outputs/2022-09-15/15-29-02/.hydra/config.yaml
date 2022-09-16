@@ -1,0 +1,18 @@
+machine:
+  raspa_dir: /work/lsmo/aiida-lsmo-codes/data/raspa
+  lib_dir: /work/lsmo/aiida-lsmo-codes/lib/raspa_4467e14_fidis
+  raspa_bin: /work/lsmo/aiida-lsmo-codes/bin/simulate_4467e14_fidis
+task:
+  name: nvt
+  block: false
+  molecule: CO2
+  NumberOfCycles: 10000
+  NumberOfInitializationCycles: 6000
+  Forcefield: UFFTraPPE
+  CutOffVDW: 12.8
+  ExternalTemperature: 298
+  Movies: true
+  WriteMoviesEvery: 1
+  MoleculeDefinition: UFFTraPPE
+cif_dir: ./test_cif
+out_dir: ./test_out

@@ -1,30 +1,30 @@
 # Create simulation.input file for molsim tasks
 
 # Henry coefficient
-def henry(structure, unitcell, config):
+def henry(structure, unitcell, NumberOfCycles, Forcefield, CutOff, ExternelTemperature, MoleculeName, MoleculeDefinition, **kwargs):
     with open("simulation.input","w") as fo:
         str_out = ""
         str_out += "SimulationType               MonteCarlo\n"
-        str_out += "NumberOfCycles               10000\n"
+        str_out += "NumberOfCycles               %s\n" %NumberOfCycles
         str_out += "NumberOfInitializationCycles 0\n"
         str_out += "PrintEvery                   100\n"
         str_out += "RestartFile                  no\n\n"
-        str_out += "Forcefield                   diversity-ff\n"
+        str_out += "Forcefield                   %s\n" %Forcefield
         str_out += "UseChargesFromCIFFile   yes\n"
-        str_out += "CutOff                  12.8\n"
+        str_out += "CutOff                  %s\n" %CutOff
         str_out += "ChargeMethod            Ewald\n\n"
         str_out += "Framework               0\n"
-        str_out += "FrameworkName           %s\n"%(structure)
+        str_out += "FrameworkName           %s\n" %structure
         str_out += "UnitCells               %i %i %i\n"%(unitcell[0],unitcell[1],unitcell[2])
-        str_out += "ExternalTemperature     %s\n\n"%str(T)
-        str_out += "Component 0 MoleculeName                 %s\n"%(molecule)
-        str_out += "            MoleculeDefinition           TraPPE\n"
+        str_out += "ExternalTemperature     %s\n\n" %ExternelTemperature
+        str_out += "Component 0 MoleculeName                 %s\n" %MoleculeName
+        str_out += "            MoleculeDefinition           %s\n" %MoleculeDefinition
         str_out += "            WidomProbability              1.0\n"
         str_out += "            CreateNumberOfMolecules      0\n"
         fo.write(str_out)
         fo.close()
 
-def nvt(structure, unitcell, molecule, NumberOfCycles, NumberOfInitializationCycles, Forcefield, CutOffVDW, ExternelTemperature, Movies, WriteMoviesEvery, MoleculeDefinition):
+def nvt(structure, unitcell, NumberOfCycles, NumberOfInitializationCycles, Forcefield, CutOffVDW, ExternelTemperature, Movies, WriteMoviesEvery, MoleculeName, MoleculeDefinition, **kwargs):
     str_out = ""
     str_out += "SimulationType               MonteCarlo\n"
     str_out += "NumberOfCycles               %s\n" %NumberOfCycles
@@ -40,7 +40,7 @@ def nvt(structure, unitcell, molecule, NumberOfCycles, NumberOfInitializationCyc
     str_out += "ExternalTemperature     %s\n" %ExternelTemperature
     str_out += "Movies                  yes\n"
     str_out += "WriteMoviesEvery        1\n"
-    str_out += "Component 0 MoleculeName                 %s\n" %molecule
+    str_out += "Component 0 MoleculeName                 %s\n" %MoleculeName
     str_out += "            MoleculeDefinition           %s\n" %MoleculeDefinition
     str_out += "            TranslationProbability       1.0\n"
     str_out += "            RotationProbability          1.0\n"
@@ -49,7 +49,7 @@ def nvt(structure, unitcell, molecule, NumberOfCycles, NumberOfInitializationCyc
     return str_out
 
 # Create a simulation.input file for GCMC calculations
-def gcmc(cycles, structure, unitcell, T, P, molecule, block):
+def gcmc(cycles, structure, unitcell, T, P, molecule, block, **kwargs):
     # T and P are in (K) and (Pa) respectively
     with open("simulation.input","w") as fo:
         str_out = ""

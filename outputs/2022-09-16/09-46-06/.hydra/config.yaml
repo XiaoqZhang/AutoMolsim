@@ -1,0 +1,15 @@
+cif_dir: ./test_cif
+out_dir: ./test_out
+machine:
+  name: fidis
+  raspa_dir: /work/lsmo/aiida-lsmo-codes/data/raspa
+  lib_dir: /work/lsmo/aiida-lsmo-codes/lib/raspa_4467e14_fidis
+  raspa_bin: /work/lsmo/aiida-lsmo-codes/bin/simulate_4467e14_fidis
+task:
+  block: yes/no
+  molecule: co2
+  T_ads: 298
+  T_des: 363
+  P_ads: 100000
+  P_des: 10000
+  cycles: 10000

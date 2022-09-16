@@ -1,0 +1,4 @@
+machine: fidis
+task: nvt
+cif_dir: ./test_cif
+out_dir: ./test_out

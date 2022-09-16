@@ -1,0 +1,4 @@
+name: fidis
+raspa_dir: /work/lsmo/aiida-lsmo-codes/data/raspa
+lib_dir: /work/lsmo/aiida-lsmo-codes/lib/raspa_4467e14_fidis
+raspa_bin: /work/lsmo/aiida-lsmo-codes/bin/simulate_4467e14_fidis

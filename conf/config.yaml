@@ -1,10 +1,11 @@
 defaults:
   - _self_
-  - machine: local
-  - task: nvt
+  - machine: fidis
+  - task: gcmc
 
-cif_dir: /home/xiaoqi/molsim/nature_cif_deduplicated
-out_dir: /home/xiaoqi/molsim/co2_nvt_deduplicated
+#cif_dir: /home/xiaoqi/molsim/nature_cif_deduplicated
+#out_dir: /home/xiaoqi/molsim/co2_nvt_deduplicated
 
-#cif_dir: ./test_cif
-#out_dir: ./test_out
+cif_dir: ./test_cif
+out_dir: ./test_out
+#out_dir: /run/user/1001/gvfs/sftp:host=fidis.epfl.ch/scratch/xiazhang/result_folder
