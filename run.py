@@ -12,7 +12,7 @@ from src.script import *
 def run(cfg: DictConfig) -> None:
      
     assert cfg.machine.name in ["local", "fidis"], "Unknown machine!"
-    assert cfg.task.name in ["henry", "nvt"], "Unknown task!"
+    assert cfg.task.name in ["henry", "nvt", "gcmc"], "Unknown task!"
 
     # create output directory
     if not os.path.exists(cfg.out_dir):
@@ -45,16 +45,18 @@ def run(cfg: DictConfig) -> None:
     
         # prepare simulation.input
         if cfg.task.name == "nvt":
-            print("Generating simulation input for %s" %structure)
-            str_out = nvt(
-                structure = structure,
-                unitcell = unitcell,
-                **cfg.task
-            )
+            print("Generating NVT simulation.input for %s" %structure)
+            str_out = nvt(structure = structure, unitcell = unitcell, **cfg.task)
             with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
                 fo.write(str_out)
         elif cfg.task.name == "henry":
+            print("Generating KH simulation.input for %s" %structure)
             str_out = henry(structure, unitcell, **cfg.task)
+            with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
+                fo.write(str_out)
+        elif cfg.task.name == "gcmc":
+            print("Generating GCMC simulation.input for %s" %structure)
+            str_out = gcmc(structure, unitcell, **cfg.task)
             with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
                 fo.write(str_out)
         

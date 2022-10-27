@@ -1,7 +1,17 @@
-block: yes/no
-molecule: co2
-T_ads: 298
-T_des: 363 # for gcmc
-P_ads: 100000
-P_des: 10000
-cycles: 10000
+name: gcmc
+block: no
+
+#T_ads: 298
+#T_des: 363 # for gcmc
+#P_ads: 100000
+#P_des: 10000
+
+NumberOfCycles: 6000
+NumberOfInitializationCycles: 4000
+Forcefield: UFFTraPPE
+
+T: 298
+P: 10000
+
+MoleculeName: CO2
+MoleculeDefinition: UFFTraPPE

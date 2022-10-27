@@ -1,0 +1,14 @@
+cif_dir: ./test_cif
+out_dir: ./test_out
+machine:
+  name: local
+  raspa_dir: /home/xiaoqi/RASPA/simulations/
+task:
+  name: henry
+  block: false
+  NumberOfCycles: 10000
+  Forcefield: UFFTraPPE
+  CutOff: 12.8
+  ExternelTemperature: 298
+  MoleculeName: CO2
+  MoleculeDefinition: UFFTraPPE
