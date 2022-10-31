@@ -1,7 +1,7 @@
 defaults:
   - _self_
   - machine: local
-  - task: henry
+  - task: minimization
 
 #cif_dir: /home/xiaoqi/molsim/nature_cif_deduplicated
 #out_dir: /home/xiaoqi/molsim/co2_nvt_deduplicated

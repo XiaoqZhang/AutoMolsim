@@ -1,18 +1,25 @@
-SimulationType               MonteCarlo
-NumberOfCycles               6000
-NumberOfInitializationCycles 4000
-PrintEvery                   10
-PrintPropertiesEvery         10
-RestartFile                  no
+SimulationType                  Minimization
+NumberOfCycles                  5
+NumberOfInitializationCycles    0
+PrintEvery                      1
+RestartFile                     yes
 
-Forcefield                   UFFTraPPE
+MaximumNumberOfMinimizationSteps    10000
+RMSGraientTolerance             1e-6
+MaxGradientTolerance            1e-6
 
-Framework               0
-FrameworkName           ABETIN_clean
-UseChargesFromCIFFile   yes
-UnitCells               1 1 1
-ExternalTemperature     298
-ExternalPressure        10000
+Forcefield                      UFFTraPPE
+CutOffVDW                       12.8
+UseChargesFromCIFFile           yes
+ChargeMethod                    Ewald
+
+Framework                       0
+FrameworkName                   ABETIN_clean
+UnitCells                       1 1 1
+ExternalTemperature             50
+
+Movies                          yes
+WriteMoviesEvery                1
 
 Component 0 MoleculeName                 CO2
             MoleculeDefinition           UFFTraPPE

@@ -12,7 +12,7 @@ from src.script import *
 def run(cfg: DictConfig) -> None:
      
     assert cfg.machine.name in ["local", "fidis"], "Unknown machine!"
-    assert cfg.task.name in ["henry", "nvt", "gcmc"], "Unknown task!"
+    assert cfg.task.name in ["henry", "nvt", "gcmc", "minimization"], "Unknown task!"
 
     # create output directory
     if not os.path.exists(cfg.out_dir):
@@ -46,6 +46,10 @@ def run(cfg: DictConfig) -> None:
         # prepare simulation.input
         if cfg.task.name == "nvt":
             print("Generating NVT simulation.input for %s" %structure)
+            if cfg.task.RestartFile == "yes":
+                ori_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.last_temperature)
+                restart_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.T)
+                restart_file(cfg.out_dir, structure, ori_file_name, restart_file_name)
             str_out = nvt(structure = structure, unitcell = unitcell, **cfg.task)
             with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
                 fo.write(str_out)
@@ -59,6 +63,15 @@ def run(cfg: DictConfig) -> None:
             str_out = gcmc(structure, unitcell, **cfg.task)
             with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
                 fo.write(str_out)
+        elif cfg.task.name == "minimization":
+            print("Generating minimization simulation.input for %s" %structure)
+            if cfg.task.RestartFile == "yes":
+                ori_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.last_temperature)
+                restart_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.T)
+                restart_file(cfg.out_dir, structure, ori_file_name, restart_file_name)
+            str_out = minimization(structure, unitcell, **cfg.task)
+            with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
+                fo.write(str_out)
         
         # prepare shell script
         if cfg.machine.name == "local":
@@ -69,6 +82,19 @@ def run(cfg: DictConfig) -> None:
             str_out = fidis(**cfg.machine)
             with open(os.path.join(sim_dir, "run.sh"), "w") as fo:
                 fo.write(str_out)
+
+def restart_file(out_dir, structure, ori_file_name, restart_file_name):
+    # check if RestartInit exists or not
+    if not os.path.exists(os.path.join(out_dir, structure, "RestartInitial")):
+        shutil.copy(
+            os.path.join(out_dir, structure, "Restart"),
+            os.path.join(out_dir, structure, "RestartInitial")
+        )
+    # copy restart file
+    shutil.copy(
+        os.path.join(out_dir, structure, "Restart/System_0", ori_file_name),
+        os.path.join(out_dir, structure, "RestartInitial/System_0", restart_file_name)
+    )
 
 if __name__ == "__main__":
     run()
