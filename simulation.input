@@ -14,8 +14,8 @@ UseChargesFromCIFFile           yes
 ChargeMethod                    Ewald
 
 Framework                       0
-FrameworkName                   ABETIN_clean
-UnitCells                       1 1 1
+FrameworkName                   ABUWOJ_clean
+UnitCells                       2 2 2
 ExternalTemperature             50
 
 Movies                          yes

@@ -1,30 +1,22 @@
-SimulationType                  Minimization
-NumberOfCycles                  5
-NumberOfInitializationCycles    0
-PrintEvery                      1
-RestartFile                     yes
+SimulationType               MonteCarlo
+NumberOfCycles               10000
+NumberOfInitializationCycles 6000
+RestartFile                  yes
 
-MaximumNumberOfMinimizationSteps    10000
-RMSGraientTolerance             1e-6
-MaxGradientTolerance            1e-6
+Forcefield                   UFFTraPPE
+CutOffVDW                  12.8
+UseChargesFromCIFFile   yes
+ChargeMethod            Ewald
 
-Forcefield                      UFFTraPPE
-CutOffVDW                       12.8
-UseChargesFromCIFFile           yes
-ChargeMethod                    Ewald
-
-Framework                       0
-FrameworkName                   ABUWOJ_clean
-UnitCells                       2 2 2
-ExternalTemperature             50
-
-Movies                          yes
-WriteMoviesEvery                1
-
+Framework               0
+FrameworkName           ABUWOJ_clean
+UnitCells               2 2 2
+ExternalTemperature     200
+Movies                  True
+WriteMoviesEvery        1
 Component 0 MoleculeName                 CO2
             MoleculeDefinition           UFFTraPPE
             TranslationProbability       1.0
             RotationProbability          1.0
             ReinsertionProbability       1.0
-            SwapProbability              1.0
-            CreateNumberOfMolecules      0
+            CreateNumberOfMolecules      1

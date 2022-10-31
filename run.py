@@ -20,7 +20,7 @@ def run(cfg: DictConfig) -> None:
 
     # read cif list
     structure_list = os.listdir(cfg.cif_dir)
-    structures = [s.rsplit('.', 1)[0] for s in structure_list]
+    structures = [s.rsplit('.', 1)[0] for s in structure_list if s.rsplit('.', 1)[-1]=="cif"]
     for structure in structures:
         unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"))
 
@@ -48,7 +48,7 @@ def run(cfg: DictConfig) -> None:
             print("Generating NVT simulation.input for %s" %structure)
             if cfg.task.RestartFile == "yes":
                 ori_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.last_temperature)
-                restart_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.T)
+                restart_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.ExternelTemperature)
                 restart_file(cfg.out_dir, structure, ori_file_name, restart_file_name)
             str_out = nvt(structure = structure, unitcell = unitcell, **cfg.task)
             with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
@@ -86,10 +86,8 @@ def run(cfg: DictConfig) -> None:
 def restart_file(out_dir, structure, ori_file_name, restart_file_name):
     # check if RestartInit exists or not
     if not os.path.exists(os.path.join(out_dir, structure, "RestartInitial")):
-        shutil.copy(
-            os.path.join(out_dir, structure, "Restart"),
-            os.path.join(out_dir, structure, "RestartInitial")
-        )
+        os.mkdir(os.path.join(out_dir, structure, "RestartInitial"))
+        os.mkdir(os.path.join(out_dir, structure, "RestartInitial/System_0"))
     # copy restart file
     shutil.copy(
         os.path.join(out_dir, structure, "Restart/System_0", ori_file_name),
