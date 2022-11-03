@@ -3,14 +3,14 @@ block: no
 
 NumberOfCycles: 10000
 NumberOfInitializationCycles: 6000
-RestartFile: "yes"
+RestartFile: "no"
 last_temperature: 250       # if RestartFile == "yes"
 
 Forcefield: UFFTraPPE
 CutOffVDW: 12.8
-ExternelTemperature: 200
+ExternelTemperature: 298
 Movies: yes
 WriteMoviesEvery: 1
 
 MoleculeName: CO2
-MoleculeDefinition: UFFTraPPE
+MoleculeDefinition: TraPPE
