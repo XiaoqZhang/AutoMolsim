@@ -3,12 +3,12 @@ block: no
 
 NumberOfCycles: 10000
 NumberOfInitializationCycles: 6000
-RestartFile: "no"
-last_temperature: 250       # if RestartFile == "yes"
+RestartFile: "yes"
+last_temperature: 200       # if RestartFile == "yes"
 
 Forcefield: UFFTraPPE
 CutOffVDW: 12.8
-ExternelTemperature: 298
+ExternelTemperature: 150
 Movies: yes
 WriteMoviesEvery: 1
 
