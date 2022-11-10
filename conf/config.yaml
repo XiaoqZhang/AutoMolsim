@@ -3,5 +3,8 @@ defaults:
   - machine: fidis
   - task: nvt
 
-cif_dir: /home/xiazhang/cifs_reservoir
-out_dir: /scratch/xiazhang/binding_ene_co2_core
+#cif_dir: /home/xiazhang/cifs_reservoir
+#out_dir: /scratch/xiazhang/binding_ene_co2_core
+
+cif_dir: ./test_cif
+out_dir: ./test_out

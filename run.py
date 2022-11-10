@@ -3,6 +3,8 @@ from omegaconf import DictConfig, OmegaConf
 
 import os
 import shutil
+import logging
+from tqdm import tqdm
 
 from src.cells import *
 from src.raspa import *
@@ -21,7 +23,7 @@ def run(cfg: DictConfig) -> None:
     # read cif list
     structure_list = os.listdir(cfg.cif_dir)
     structures = [s.rsplit('.', 1)[0] for s in structure_list if s.rsplit('.', 1)[-1]=="cif"]
-    for structure in structures:
+    for structure in tqdm(structures):
         unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"))
 
         # create a folder for each structure
@@ -45,30 +47,36 @@ def run(cfg: DictConfig) -> None:
     
         # prepare simulation.input
         if cfg.task.name == "nvt":
-            print("Generating NVT simulation.input for %s" %structure)
             if cfg.task.RestartFile == "yes":
                 ori_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.last_temperature)
-                restart_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.ExternelTemperature)
-                restart_file(cfg.out_dir, structure, ori_file_name, restart_file_name)
+                # sanity check
+                try:
+                    restart_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.ExternelTemperature)
+                    restart_file(cfg.out_dir, structure, ori_file_name, restart_file_name)
+                except:
+                    logging.warning("%s: Restart file doesn't exist!" %structure)
+                    # change ExternalTemperature to the last one
+                    cfg.task.ExternelTemperature = cfg.task.last_temperature
             str_out = nvt(structure = structure, unitcell = unitcell, **cfg.task)
             with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
                 fo.write(str_out)
         elif cfg.task.name == "henry":
-            print("Generating KH simulation.input for %s" %structure)
             str_out = henry(structure, unitcell, **cfg.task)
             with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
                 fo.write(str_out)
         elif cfg.task.name == "gcmc":
-            print("Generating GCMC simulation.input for %s" %structure)
             str_out = gcmc(structure, unitcell, **cfg.task)
             with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
                 fo.write(str_out)
         elif cfg.task.name == "minimization":
-            print("Generating minimization simulation.input for %s" %structure)
             if cfg.task.RestartFile == "yes":
                 ori_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.last_temperature)
-                restart_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.T)
-                restart_file(cfg.out_dir, structure, ori_file_name, restart_file_name)
+                # sanity check
+                try:
+                    restart_file_name = "restart_{}_{}.{}.{}_{:.6f}_0".format(structure, unitcell[0], unitcell[1], unitcell[2], cfg.task.T)
+                    restart_file(cfg.out_dir, structure, ori_file_name, restart_file_name)
+                except:
+                    logging.warning("%s: Restart file doesn't exist!" %structure)
             str_out = minimization(structure, unitcell, **cfg.task)
             with open(os.path.join(sim_dir, "simulation.input"), "w") as fo:
                 fo.write(str_out)
