@@ -26,7 +26,7 @@ def henry(structure, unitcell, NumberOfCycles, Forcefield, CutOff, ExternelTempe
     return str_out
 
 # NVT simulation
-def nvt(structure, unitcell, NumberOfCycles, NumberOfInitializationCycles, RestartFile, Forcefield, CutOffVDW, ExternelTemperature, Movies, WriteMoviesEvery, MoleculeName, MoleculeDefinition, **kwargs):
+def nvt(structure, unitcell, NumberOfCycles, NumberOfInitializationCycles, RestartFile, Forcefield, CutOffVDW, ExternelTemperature, Movies, WriteMoviesEvery, MoleculeName, MoleculeDefinition, CreateNumberOfMolecules, **kwargs):
     str_out = ""
     str_out += "SimulationType               MonteCarlo\n"
     str_out += "NumberOfCycles               %s\n" %NumberOfCycles
@@ -47,7 +47,7 @@ def nvt(structure, unitcell, NumberOfCycles, NumberOfInitializationCycles, Resta
     str_out += "            TranslationProbability       1.0\n"
     str_out += "            RotationProbability          1.0\n"
     str_out += "            ReinsertionProbability       1.0\n"
-    str_out += "            CreateNumberOfMolecules      1\n"
+    str_out += "            CreateNumberOfMolecules      %s\n" %CreateNumberOfMolecules
     return str_out
 
 # Grand Canonical Monte Carlo (GCMC)
