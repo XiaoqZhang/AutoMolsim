@@ -1,3 +1,11 @@
-test_cif
-test_out
-outputs
+# test input and output
+test_cif/
+test_out/
+outputs/
+
+# change of configurations
+conf/
+
+# Python & Packaging
+src/__pycache__/
+*.egg-info/

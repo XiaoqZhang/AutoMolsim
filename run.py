@@ -6,9 +6,11 @@ import shutil
 import logging
 from tqdm import tqdm
 
-from src.cells import *
-from src.raspa import *
-from src.script import *
+from raspa_molsim.cells import *
+from raspa_molsim.raspa import *
+from raspa_molsim.script import *
+from raspa_molsim.run_workchain import *
+from raspa_molsim.file_utils import *
 
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def run(cfg: DictConfig) -> None:
