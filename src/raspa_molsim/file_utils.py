@@ -1,6 +1,6 @@
 import os
 import shutil
-from raspa_molsim.raspa import henry, nvt, gcmc, minimization, grid
+from raspa_molsim.raspa import *
 
 def write_simulation_input(step, path, params):
     if params.name == "henry":

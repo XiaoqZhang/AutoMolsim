@@ -1,7 +1,0 @@
-defaults:
-  - _self_
-  - machine: fidis
-  - task: nvt
-
-cif_dir: /home/xiazhang/cifs_reservoir
-out_dir: /scratch/xiazhang/binding_ene_co2_core

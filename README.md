@@ -1,3 +1,15 @@
+# Prerequisites
+- Install zeo++ (http://www.zeoplusplus.org/download.html)
+- Create an Anaconda environment with python version 3.8 by `conda create -m <env-name> python=3.8 -y`
+- Install RASPA by `conda install -c conda-forge raspa2`
+- Setup the environment path by `export RASPA_DIR=</path/to/conda/environment>`
+- Create an Anaconda environment and install this package by `pip install -e .`
+
+# How to use
+
+- Configure your simulation by files in `conf` folder
+- Run the program by `python run.py`
+
 # molsim_workflow
 A computational workflow which takes as input a CIF (Crystallographic Information File) of a MOF (Metal Organic Framework) and then performs the following operations:
 
