@@ -15,7 +15,7 @@ from raspa_molsim.file_utils import *
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def run(cfg: DictConfig) -> None:
      
-    assert cfg.machine.name in ["local", "fidis"], "Unknown machine!"
+    assert cfg.machine.name in ["local", "fidis", "lsmosrv"], "Unknown machine!"
     assert cfg.task.name in ["henry", "nvt", "gcmc", "minimization"], "Unknown task!"
 
     # create output directory
@@ -89,6 +89,10 @@ def run(cfg: DictConfig) -> None:
             with open(os.path.join(sim_dir, "run.sh"), "w") as fo:
                 fo.write(str_out)
         elif cfg.machine.name == "fidis":
+            str_out = fidis(**cfg.machine)
+            with open(os.path.join(sim_dir, "run.sh"), "w") as fo:
+                fo.write(str_out)
+        elif cfg.machine.name == "lsmosrv":
             str_out = fidis(**cfg.machine)
             with open(os.path.join(sim_dir, "run.sh"), "w") as fo:
                 fo.write(str_out)

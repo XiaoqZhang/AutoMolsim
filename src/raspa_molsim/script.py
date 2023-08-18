@@ -14,7 +14,6 @@ def fidis(time, mem, raspa_dir, lib_dir, raspa_bin, **kwargs):
     str_out += "#SBATCH --get-user-env\n"
     str_out += "#SBATCH --nodes 1\n"
     str_out += "#SBATCH --ntasks 1\n"
-    str_out += "#SBATCH --partition serial\n"
     str_out += "#SBATCH --time %s\n" %time
     str_out += "#SBATCH --mem %s\n\n" %mem
     str_out += "export RASPA_DIR=%s\n" %raspa_dir
