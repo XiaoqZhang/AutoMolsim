@@ -7,6 +7,7 @@ import logging
 from tqdm import tqdm
 
 from raspa_molsim.cells import *
+from raspa_molsim.zeo import *
 from raspa_molsim.raspa import *
 from raspa_molsim.script import *
 from raspa_molsim.run_workchain import *
@@ -35,9 +36,10 @@ def run(cfg: DictConfig) -> None:
         shutil.copyfile(os.path.join(cfg.cif_dir, structure+".cif"), 
                         os.path.join(sim_dir, structure+".cif"))
 
+        """
         # check if perform zeo calculation for blocking sphere or not
         if cfg.task.block == "yes":
-            zeo(structure.split('.', 1)[0])
+            zeo_block(structure.split('.', 1)[0])
             with open(structure.rsplit('.',1)[0] + ".block") as f9:
                 if "0" in f9.readline():
                     block = "no"
@@ -46,7 +48,7 @@ def run(cfg: DictConfig) -> None:
                 f9.close()
         else:
             block = "no"
-    
+        """ 
         # prepare simulation.input
         if cfg.task.name == "nvt":
             if cfg.task.RestartFile == "yes":
@@ -85,15 +87,15 @@ def run(cfg: DictConfig) -> None:
         
         # prepare shell script
         if cfg.machine.name == "local":
-            str_out = local(**cfg.machine)
+            str_out = local(**cfg.machine, **cfg.zeo_params, structure=structure+".cif")
             with open(os.path.join(sim_dir, "run.sh"), "w") as fo:
                 fo.write(str_out)
         elif cfg.machine.name == "fidis":
-            str_out = fidis(**cfg.machine)
+            str_out = fidis(**cfg.machine, **cfg.zeo_params, structure=structure+".cif")
             with open(os.path.join(sim_dir, "run.sh"), "w") as fo:
                 fo.write(str_out)
         elif cfg.machine.name == "lsmosrv":
-            str_out = fidis(**cfg.machine)
+            str_out = fidis(**cfg.machine, **cfg.zeo_params, structure=structure+".cif")
             with open(os.path.join(sim_dir, "run.sh"), "w") as fo:
                 fo.write(str_out)
 
