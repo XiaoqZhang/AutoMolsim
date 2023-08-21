@@ -27,7 +27,7 @@ def cell_units(lens, angs, co):
     return xmin, ymin, zmin
 
 # Extract the edge lengths and angles from the .cif file
-def extract_geometry(structure_path):
+def extract_geometry(structure_path, cutoff):
     with open (structure_path, 'r') as fi:
         data = fi.readlines()
         for line in data:
@@ -46,5 +46,5 @@ def extract_geometry(structure_path):
         lens = [a, b, c]
         angs = [alpha, beta, gamma]
         fi.close()
-    unitcell = cell_units(lens, angs, 12)
+    unitcell = cell_units(lens, angs, cutoff)
     return unitcell

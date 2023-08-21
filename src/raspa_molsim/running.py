@@ -27,7 +27,7 @@ def run_preprocessing(cfg: DictConfig) -> None:
     structure_list = os.listdir(cfg.cif_dir)
     structures = [s.rsplit('.', 1)[0] for s in structure_list if s.rsplit('.', 1)[-1]=="cif"]
     for structure in tqdm(structures):
-        unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"))
+        unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"), cfg.task.CutOffVDW)
 
         # create a folder for each structure
         sim_dir = os.path.join(cfg.out_dir, structure)
@@ -92,8 +92,9 @@ def run_postprocessing(cfg: DictConfig) -> None:
     structures = [s.rsplit('.', 1)[0] for s in structure_list if s.rsplit('.', 1)[-1]=="cif"]
     
     khs, kh_devs = [], []
+    unfinished = []
     for structure in tqdm(structures):
-        unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"))
+        unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"), cfg.task.CutOffVDW)
 
         # get the output folder for each structure
         sim_dir = os.path.join(cfg.out_dir, structure, "Output/System_0")
@@ -102,6 +103,9 @@ def run_postprocessing(cfg: DictConfig) -> None:
             kh, kh_dev = read_henry(structure, unitcell, **cfg.task)
             khs.append(kh)
             kh_devs.append(kh_dev)
+            
+            if kh is None:
+                unfinished.append(structure)
             
     df = pd.DataFrame(
         {
@@ -116,3 +120,8 @@ def run_postprocessing(cfg: DictConfig) -> None:
         index=False
     )  
   
+    # write unfinished cifs
+    if len(unfinished) > 0:
+        with open(os.path.join(cfg.out_dir, "unfinished"), "w") as fp:
+            for struc in unfinished:
+                fp.write("%s\n" %struc)

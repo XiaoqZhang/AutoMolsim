@@ -3,7 +3,7 @@ block: yes
 
 NumberOfCycles: 10000
 Forcefield: UFFTraPPE
-CutOff: 12.8
+CutOffVDW: 12.8
 ExternelTemperature: 298
 
 MoleculeName: N2 
