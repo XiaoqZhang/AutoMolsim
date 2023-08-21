@@ -27,28 +27,29 @@ def henry(structure, unitcell, NumberOfCycles, Forcefield, CutOff, ExternelTempe
 
 # NVT simulation
 def nvt(structure, unitcell, NumberOfCycles, NumberOfInitializationCycles, RestartFile, Forcefield, CutOffVDW, ExternelTemperature, Movies, WriteMoviesEvery, MoleculeName, MoleculeDefinition, CreateNumberOfMolecules, **kwargs):
-    str_out = ""
-    str_out += "SimulationType               MonteCarlo\n"
-    str_out += "NumberOfCycles               %s\n" %NumberOfCycles
-    str_out += "NumberOfInitializationCycles %s\n" %NumberOfInitializationCycles
-    str_out += "RestartFile                  %s\n\n" %RestartFile
-    str_out += "Forcefield                   %s\n" %Forcefield
-    str_out += "CutOffVDW                  %s\n" %CutOffVDW
-    str_out += "UseChargesFromCIFFile   yes\n"
-    str_out += "ChargeMethod            Ewald\n\n"
-    str_out += "Framework               0\n"
-    str_out += "FrameworkName           %s\n" %structure
-    str_out += "UnitCells               %i %i %i\n" %(unitcell[0],unitcell[1],unitcell[2])
-    str_out += "ExternalTemperature     %s\n" %ExternelTemperature
-    str_out += "Movies                  %s\n" %Movies
-    str_out += "WriteMoviesEvery        %i\n" %WriteMoviesEvery
-    str_out += "Component 0 MoleculeName                 %s\n" %MoleculeName
-    str_out += "            MoleculeDefinition           %s\n" %MoleculeDefinition
-    str_out += "            TranslationProbability       1.0\n"
-    str_out += "            RotationProbability          1.0\n"
-    str_out += "            ReinsertionProbability       1.0\n"
-    str_out += "            CreateNumberOfMolecules      %s\n" %CreateNumberOfMolecules
-    return str_out
+    with open("simulation.input","w") as fo:
+        str_out = ""
+        str_out += "SimulationType               MonteCarlo\n"
+        str_out += "NumberOfCycles               %s\n" %NumberOfCycles
+        str_out += "NumberOfInitializationCycles %s\n" %NumberOfInitializationCycles
+        str_out += "RestartFile                  %s\n\n" %RestartFile
+        str_out += "Forcefield                   %s\n" %Forcefield
+        str_out += "CutOffVDW                  %s\n" %CutOffVDW
+        str_out += "UseChargesFromCIFFile   yes\n"
+        str_out += "ChargeMethod            Ewald\n\n"
+        str_out += "Framework               0\n"
+        str_out += "FrameworkName           %s\n" %structure
+        str_out += "UnitCells               %i %i %i\n" %(unitcell[0],unitcell[1],unitcell[2])
+        str_out += "ExternalTemperature     %s\n" %ExternelTemperature
+        str_out += "Movies                  %s\n" %Movies
+        str_out += "WriteMoviesEvery        %i\n" %WriteMoviesEvery
+        str_out += "Component 0 MoleculeName                 %s\n" %MoleculeName
+        str_out += "            MoleculeDefinition           %s\n" %MoleculeDefinition
+        str_out += "            TranslationProbability       1.0\n"
+        str_out += "            RotationProbability          1.0\n"
+        str_out += "            ReinsertionProbability       1.0\n"
+        str_out += "            CreateNumberOfMolecules      %s\n" %CreateNumberOfMolecules
+        return str_out
 
 # Grand Canonical Monte Carlo (GCMC)
 def gcmc(structure, unitcell, NumberOfCycles, NumberOfInitializationCycles, Forcefield, T, P, MoleculeName, MoleculeDefinition, block, **kwargs):

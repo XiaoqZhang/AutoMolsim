@@ -14,7 +14,7 @@ FrameworkName           ABEXEN_clean
 UnitCells               2 2 1
 ExternalTemperature     298
 
-Component 0 MoleculeName                 CO2
-            MoleculeDefinition           UFFTraPPE
+Component 0 MoleculeName                 N2
+            MoleculeDefinition           TraPPE
             WidomProbability              1.0
             CreateNumberOfMolecules      0
