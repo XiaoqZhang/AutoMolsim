@@ -1,10 +1,10 @@
 defaults:
   - _self_
-  - machine: lsmosrv
+  - machine: fidis
   - task: henry
-  - zeo_params: n2
+  - zeo_params: co2
 
-mode: post
+mode: prep
   
-cif_dir: /home/xiazhang/utils/AutoMolsim/test_cif #/home/xiazhang/md_cifs
-out_dir: /home/xiazhang/utils/AutoMolsim/test_out #/home/xiazhang/md_cifs_n2
+cif_dir: /home/xiazhang/cifs_reservoir/md_cifs_2
+out_dir: /home/xiazhang/md_cifs_co2_2

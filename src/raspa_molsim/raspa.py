@@ -1,7 +1,7 @@
 # Create simulation.input file for molsim tasks
 
 # Henry coefficient
-def henry(structure, unitcell, NumberOfCycles, Forcefield, CutOff, ExternelTemperature, MoleculeName, MoleculeDefinition, **kwargs):
+def henry(structure, unitcell, NumberOfCycles, Forcefield, CutOffVDW, ExternelTemperature, MoleculeName, MoleculeDefinition, **kwargs):
     str_out = ""
     str_out += "SimulationType               MonteCarlo\n"
     str_out += "NumberOfCycles               %s\n" %NumberOfCycles
@@ -10,7 +10,7 @@ def henry(structure, unitcell, NumberOfCycles, Forcefield, CutOff, ExternelTempe
     str_out += "RestartFile                  no\n\n"
     str_out += "Forcefield                   %s\n" %Forcefield
     str_out += "UseChargesFromCIFFile   yes\n"
-    str_out += "CutOff                  %s\n" %CutOff
+    str_out += "CutOff                  %s\n" %CutOffVDW
     str_out += "ChargeMethod            Ewald\n\n"
     str_out += "Framework               0\n"
     str_out += "FrameworkName           %s\n" %structure

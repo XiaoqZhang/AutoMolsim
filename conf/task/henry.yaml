@@ -6,5 +6,5 @@ Forcefield: UFFTraPPE
 CutOffVDW: 12.8
 ExternelTemperature: 298
 
-MoleculeName: N2 
+MoleculeName: CO2 
 MoleculeDefinition: TraPPE
