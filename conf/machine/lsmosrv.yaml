@@ -4,6 +4,6 @@ time: 04:00:00
 mem: 4G
 
 zeopath: /usr/local/bin/lsmo-codes/network_46ce745_ubu18
-raspa_dir: /home/xiazhang/utils/raspa
+raspa_dir: /home/xiazhang/utils/AutoMolsim/raspa_share
 lib_dir: /usr/local/bin/lsmo-codes/lib/raspa
 raspa_bin: /usr/local/bin/lsmo-codes/simulate_4467e14_ubu18
