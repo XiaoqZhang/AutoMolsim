@@ -3,6 +3,8 @@ defaults:
   - machine: lsmosrv
   - task: henry
   - zeo_params: n2
+
+mode: post
   
 cif_dir: /home/xiazhang/utils/AutoMolsim/test_cif #/home/xiazhang/md_cifs
 out_dir: /home/xiazhang/utils/AutoMolsim/test_out #/home/xiazhang/md_cifs_n2
