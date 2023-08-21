@@ -36,19 +36,6 @@ def run(cfg: DictConfig) -> None:
         shutil.copyfile(os.path.join(cfg.cif_dir, structure+".cif"), 
                         os.path.join(sim_dir, structure+".cif"))
 
-        """
-        # check if perform zeo calculation for blocking sphere or not
-        if cfg.task.block == "yes":
-            zeo_block(structure.split('.', 1)[0])
-            with open(structure.rsplit('.',1)[0] + ".block") as f9:
-                if "0" in f9.readline():
-                    block = "no"
-                else:
-                    block = "yes"
-                f9.close()
-        else:
-            block = "no"
-        """ 
         # prepare simulation.input
         if cfg.task.name == "nvt":
             if cfg.task.RestartFile == "yes":
@@ -99,16 +86,6 @@ def run(cfg: DictConfig) -> None:
             with open(os.path.join(sim_dir, "run.sh"), "w") as fo:
                 fo.write(str_out)
 
-def restart_file(out_dir, structure, ori_file_name, restart_file_name):
-    # check if RestartInit exists or not
-    if not os.path.exists(os.path.join(out_dir, structure, "RestartInitial")):
-        os.mkdir(os.path.join(out_dir, structure, "RestartInitial"))
-        os.mkdir(os.path.join(out_dir, structure, "RestartInitial/System_0"))
-    # copy restart file
-    shutil.copy(
-        os.path.join(out_dir, structure, "Restart/System_0", ori_file_name),
-        os.path.join(out_dir, structure, "RestartInitial/System_0", restart_file_name)
-    )
 
 if __name__ == "__main__":
     run()

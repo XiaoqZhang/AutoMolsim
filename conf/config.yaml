@@ -4,5 +4,5 @@ defaults:
   - task: henry
   - zeo_params: n2
   
-cif_dir: ./test_cif #/home/xiazhang/md_cifs
-out_dir: ./test_out #/home/xiazhang/md_cifs_n2
+cif_dir: /home/xiazhang/utils/AutoMolsim/test_cif #/home/xiazhang/md_cifs
+out_dir: /home/xiazhang/utils/AutoMolsim/test_out #/home/xiazhang/md_cifs_n2
