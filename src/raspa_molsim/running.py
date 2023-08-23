@@ -1,5 +1,6 @@
 import hydra
 from omegaconf import DictConfig, OmegaConf
+from varname import nameof
 
 import os
 import shutil
@@ -91,29 +92,58 @@ def run_postprocessing(cfg: DictConfig) -> None:
     structure_list = os.listdir(cfg.cif_dir)
     structures = [s.rsplit('.', 1)[0] for s in structure_list if s.rsplit('.', 1)[-1]=="cif"]
     
-    khs, kh_devs = [], []
     unfinished = []
-    for structure in tqdm(structures):
-        unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"), cfg.task.CutOffVDW)
+    
+    if cfg.task.name == "henry":
+        khs, kh_devs = [], []
+        for structure in tqdm(structures):
+            unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"), cfg.task.CutOffVDW)
 
-        # get the output folder for each structure
-        sim_dir = os.path.join(cfg.out_dir, structure, "Output/System_0")
-        os.chdir(sim_dir)
-        if cfg.task.name == "henry":
+            # get the output folder for each structure
+            sim_dir = os.path.join(cfg.out_dir, structure, "Output/System_0")
+            os.chdir(sim_dir)
+        
             kh, kh_dev = read_henry(structure, unitcell, **cfg.task)
             khs.append(kh)
             kh_devs.append(kh_dev)
-            
             if kh is None:
                 unfinished.append(structure)
-            
-    df = pd.DataFrame(
-        {
-            "cif": structures,
-            "kh": khs,
-            "kh_dev": kh_devs
-        }
-    )
+        
+        df = pd.DataFrame(
+            {
+                "cif": structures,
+                "%s_kh" %cfg.task.MoleculeName: khs,
+                "%s_kh_dev" %cfg.task.MoleculeName: kh_devs
+            }
+        )
+                
+    elif cfg.task.name == "gcmc":
+        loadings, loading_devs, qs, q_devs = [], [], [], []
+        for structure in tqdm(structures):
+            unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"), cfg.task.CutOffVDW)
+
+            # get the output folder for each structure
+            sim_dir = os.path.join(cfg.out_dir, structure, "Output/System_0")
+            os.chdir(sim_dir)
+            (l, l_dev), (q, q_dev) = read_gcmc(structure, unitcell, **cfg.task)
+            loadings.append(l)
+            loading_devs.append(l_dev)
+            qs.append(q)
+            q_devs.append(q_dev)
+            if l is None:
+                unfinished.append(structure)
+        
+        df = pd.DataFrame(
+            {
+                "cif": structures,
+                "%s_uptake_%s" %(cfg.task.MoleculeName, cfg.task.P): loadings,
+                "%s_uptake_%s_dev" %(cfg.task.MoleculeName, cfg.task.P): loading_devs,
+                "%s_enthalpy_%s" %(cfg.task.MoleculeName, cfg.task.P): qs,
+                "%s_enthalpy_%s_dev" %(cfg.task.MoleculeName, cfg.task.P): q_devs
+            }
+        )
+                
+
     logging.info(f"Saving results in {cfg.out_dir}")
     df.to_csv(
         os.path.join(cfg.out_dir, "results.csv"),

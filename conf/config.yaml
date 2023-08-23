@@ -4,7 +4,7 @@ defaults:
   - task: henry
   - zeo_params: co2
 
-mode: prep
+mode: post
   
-cif_dir: /home/xiazhang/cifs_reservoir/md_cifs_2
-out_dir: /home/xiazhang/md_cifs_co2_2
+cif_dir: /home/xiazhang/cifs_reservoir/md_cifs #/scratch/xiazhang/md_cifs_co2_3_cif
+out_dir: /scratch/xiazhang/md_cifs_co2 # /scratch/xiazhang/md_cifs_co2_1bar #/scratch/xiazhang/md_cifs_co2
