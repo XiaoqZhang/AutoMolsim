@@ -6,13 +6,13 @@ block: yes
 #P_ads: 100000
 #P_des: 10000
 
-NumberOfCycles: 50000
-NumberOfInitializationCycles: 10000
+NumberOfCycles: 6000
+NumberOfInitializationCycles: 4000
 Forcefield: UFFTraPPE
 CutOffVDW: 12.8
 
 T: 298
-P: 100000
+P: 80000 #100000
 
 MoleculeName: CO2
 MoleculeDefinition: TraPPE

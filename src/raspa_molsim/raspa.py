@@ -1,7 +1,7 @@
 # Create simulation.input file for molsim tasks
 
 # Henry coefficient
-def henry(structure, unitcell, NumberOfCycles, Forcefield, CutOffVDW, ExternelTemperature, MoleculeName, MoleculeDefinition, **kwargs):
+def henry(structure, unitcell, NumberOfCycles, Forcefield, CutOffVDW, ExternelTemperature, MoleculeName, MoleculeDefinition, block, **kwargs):
     str_out = ""
     str_out += "SimulationType               MonteCarlo\n"
     str_out += "NumberOfCycles               %s\n" %NumberOfCycles
@@ -15,6 +15,9 @@ def henry(structure, unitcell, NumberOfCycles, Forcefield, CutOffVDW, ExternelTe
     str_out += "Framework               0\n"
     str_out += "FrameworkName           %s\n" %structure
     str_out += "UnitCells               %i %i %i\n"%(unitcell[0],unitcell[1],unitcell[2])
+    if (block is True):
+        str_out += "            BlockPockets                 %s\n" %block
+        str_out += "            BlockPocketsFilename         %s\n" %structure
     str_out += "ExternalTemperature     %s\n\n" %ExternelTemperature
     str_out += "Component 0 MoleculeName                 %s\n" %MoleculeName
     str_out += "            MoleculeDefinition           %s\n" %MoleculeDefinition
@@ -62,13 +65,13 @@ def gcmc(structure, unitcell, NumberOfCycles, NumberOfInitializationCycles, Forc
     str_out += "FrameworkName           %s\n" %structure
     str_out += "UseChargesFromCIFFile   yes\n"
     str_out += "UnitCells               %i %i %i\n"%(unitcell[0],unitcell[1],unitcell[2])
+    if (block is True):
+        str_out += "            BlockPockets                 %s\n" %block
+        str_out += "            BlockPocketsFilename         %s\n" %structure
     str_out += "ExternalTemperature     %s\n" %str(T)
     str_out += "ExternalPressure        %s\n\n" %str(P)
     str_out += "Component 0 MoleculeName                 %s\n" %MoleculeName
     str_out += "            MoleculeDefinition           %s\n" %MoleculeDefinition
-    if (block == "yes"):
-        str_out += "            BlockPockets                 %s\n" %block
-        str_out += "            BlockPocketsFilename         %s\n" %structure
     str_out += "            TranslationProbability       1.0\n"
     str_out += "            RotationProbability          1.0\n"
     str_out += "            ReinsertionProbability       1.0\n"

@@ -1,6 +1,5 @@
 import hydra
 from omegaconf import DictConfig, OmegaConf
-from varname import nameof
 
 import os
 import shutil
