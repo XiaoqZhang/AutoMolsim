@@ -1,0 +1,10 @@
+defaults:
+  - _self_
+  - machine: lsmosrv
+  - task: gcmc
+  - zeo_params: co2
+
+mode: post
+  
+cif_dir: /home/xiazhang/utils/AutoMolsim/test_cif
+out_dir: /home/xiazhang/utils/AutoMolsim/test_out

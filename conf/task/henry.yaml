@@ -1,0 +1,10 @@
+name: henry
+block: yes
+
+NumberOfCycles: 10000
+Forcefield: share
+CutOffVDW: 12.8
+ExternelTemperature: 298
+
+MoleculeName: N2 
+MoleculeDefinition: TraPPE

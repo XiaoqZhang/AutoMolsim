@@ -1,0 +1,17 @@
+name: minimization
+block: no
+
+NumberOfCycles: 5
+PrintEvery: 1
+RestartFile: 'yes'
+last_temperature: 100
+
+MaximumNumberOfMinimizationSteps: 10000
+
+Forcefield: share
+CutOffVDW: 12.8
+T: 50
+
+MoleculeName: CO2
+MoleculeDefinition: TraPPE
+CreateNumberOfMolecules: 0

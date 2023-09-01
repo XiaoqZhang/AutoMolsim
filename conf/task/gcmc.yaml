@@ -1,0 +1,13 @@
+name: gcmc
+block: yes
+
+NumberOfCycles: 10000
+NumberOfInitializationCycles: 10000
+Forcefield: share
+CutOffVDW: 12.8
+
+T: 298
+P: 80000 #100000
+
+MoleculeName: CO2
+MoleculeDefinition: TraPPE
