@@ -1,9 +1,9 @@
 # general rule for shifted vs truncated
-truncated
+shifted
 # general rule tailcorrections
 yes
 # number of defined interactions
-106
+113
 # type interactions, parameters.    IMPORTANT: define generic matches first
 Ac	LENNARD_JONES	16.608	3.0985
 Ag	LENNARD_JONES	18.1178	2.8045
@@ -111,5 +111,12 @@ Zr	LENNARD_JONES	34.7257	2.7832
 O_co2	LENNARD_JONES	79.0    3.05
 C_co2	LENNARD_JONES	27.0    2.80
 N_n2    LENNARD_JONES   36.0    3.31
+CH4_sp3 LENNARD_JONES   148.0   3.73
+N1_n2o  LENNARD_JONES   57.6    3.13
+N2_n2o  LENNARD_JONES   57.7    3.13
+O_n2o   LENNARD_JONES   71.3    2.91
+Ow      LENNARD_JONES   93.20   3.159
+S_h2s   LENNARD_JONES   122     3.60
+H_h2s   LENNARD_JONES   50      2.5
 # general mixing rule for Lennard-Jones
 Lorentz-Berthelot

@@ -99,9 +99,8 @@ def run_postprocessing(cfg: DictConfig) -> None:
             unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"), cfg.task.CutOffVDW)
 
             # get the output folder for each structure
-            sim_dir = os.path.join(cfg.out_dir, structure, "Output/System_0")
+            sim_dir = os.path.join(cfg.out_dir, structure)
             os.chdir(sim_dir)
-        
             kh, kh_dev = read_henry(structure, unitcell, **cfg.task)
             khs.append(kh)
             kh_devs.append(kh_dev)
@@ -122,7 +121,7 @@ def run_postprocessing(cfg: DictConfig) -> None:
             unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"), cfg.task.CutOffVDW)
 
             # get the output folder for each structure
-            sim_dir = os.path.join(cfg.out_dir, structure, "Output/System_0")
+            sim_dir = os.path.join(cfg.out_dir, structure)
             os.chdir(sim_dir)
             (l, l_dev), (q, q_dev) = read_gcmc(structure, unitcell, **cfg.task)
             loadings.append(l)

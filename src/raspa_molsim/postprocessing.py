@@ -1,10 +1,12 @@
+import os
 import warnings
 import logging
 
 def read_henry(structure, unitcell, ExternelTemperature, **kwargs):
-    with open ("output_"+ structure + "_" + str(unitcell[0]) + "." +
-            str(unitcell[1]) + "." + str(unitcell[2]) + "_" +
-            str(ExternelTemperature) + ".000000_0.data", 'r') as fi:
+    output_path = "Output/System_0/output_"+ structure + "_" + str(unitcell[0]) + "." + str(unitcell[1]) + "." + str(unitcell[2]) + "_" + str(ExternelTemperature) + ".000000_0.data"
+    if not os.path.exists(output_path):
+        return None, None
+    with open (output_path, 'r') as fi:
         data = fi.readlines()
         if not "Simulation finished,  0 warnings\n" in data:
             warnings.warn("Simulation not finished")
@@ -18,14 +20,17 @@ def read_henry(structure, unitcell, ExternelTemperature, **kwargs):
     return kh, kh_dev
 
 def read_gcmc(structure, unitcell, T, P, **kwargs):
-    with open ("output_"+ structure + "_" + str(unitcell[0]) + "." +
-               str(unitcell[1]) + "." + str(unitcell[2]) + "_" +
-               str(T) + ".000000_" + str(P) + ".data", 'r') as fi:
+    output_path = "Output/System_0/output_"+ structure + "_" + str(unitcell[0]) + "." + str(unitcell[1]) + "." + str(unitcell[2]) + "_" + str(T) + ".000000_" + str(P) + ".data"
+    if not os.path.exists(output_path):
+        print(os.getcwd())
+        print(f"{output_path} not exist")
+        return (None, None), (None, None)
+    with open (output_path, 'r') as fi:
         data = fi.readlines()
         if not "Simulation finished,  0 warnings\n" in data:
             warnings.warn("Simulation not finished")
             logging.info(f"Simulation not finished for {structure}")
-            L, L_dev, Q, Q_dev = None, None, None, None
+            return (None, None), (None, None)
         else:
             for line in data:
                 if "Enthalpy of adsorption:" in line:

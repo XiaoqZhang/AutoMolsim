@@ -1,23 +1,25 @@
 # critical constants: Temperature [T], Pressure [Pa], and Acentric factor [-]
-126.192
-3395800.0
-0.0372
+647.14
+22055000
+0.3449
 #Number Of Atoms
-3
+ 3
 # Number of groups
 1
-# N2O-group
+# H2O-group
 rigid
 # number of atoms
-3
+4
 # atomic positions
-0 N_n2   0.0           0.0           0.55
-1 M_n2   0.0           0.0           0.0
-2 N_n2   0.0           0.0          -0.55
+0 Ow             0.0000   0.0000   0.0000
+1 Hw             0.0000   0.75695  0.58588
+2 Hw             0.0000  -0.75695  0.58588
+3 Mw             0.0000   0.0000   0.15500
 # Chiral centers Bond  BondDipoles Bend  UrayBradley InvBend  Torsion Imp. Torsion Bond/Bond Stretch/Bend Bend/Bend Stretch/Torsion Bend/Torsion IntraVDW IntraCoulomb
                0    2            0    0            0       0        0            0         0            0         0               0            0        0            0
 # Bond stretch: atom n1-n2, type, parameters
 0 1 RIGID_BOND
-1 2 RIGID_BOND
+0 2 RIGID_BOND
 # Number of config moves
 0
+# Ref: http://www1.lsbu.ac.uk/water/water_models.html
