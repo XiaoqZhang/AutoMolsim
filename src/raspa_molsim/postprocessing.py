@@ -8,15 +8,21 @@ def read_henry(structure, unitcell, ExternelTemperature, **kwargs):
         return None, None
     with open (output_path, 'r') as fi:
         data = fi.readlines()
-        if not "Simulation finished,  0 warnings\n" in data:
-            warnings.warn("Simulation not finished")
-            logging.info(f"Simulation not finished for {structure}")
-            return None, None
-        else:
+        if ("Simulation finished,  0 warnings\n" in data):
             for line in data:
                 if "] Average Henry coefficient:" in line:
                     kh_line = line.split()
                     kh, kh_dev = float(kh_line[4]), float(kh_line[6])
+        elif ("Simulation finished,  1 warnings\n" in data) and ("WARNING: THE SYSTEM HAS A NET CHARGE \n" in data):
+            for line in data:
+                if "] Average Henry coefficient:" in line:
+                    kh_line = line.split()
+                    kh, kh_dev = float(kh_line[4]), float(kh_line[6])
+        else:
+            warnings.warn("Simulation not finished")
+            logging.info(f"Simulation not finished for {structure}")
+            return None, None
+
     return kh, kh_dev
 
 def read_gcmc(structure, unitcell, T, P, **kwargs):
@@ -27,11 +33,7 @@ def read_gcmc(structure, unitcell, T, P, **kwargs):
         return (None, None), (None, None)
     with open (output_path, 'r') as fi:
         data = fi.readlines()
-        if not "Simulation finished,  0 warnings\n" in data:
-            warnings.warn("Simulation not finished")
-            logging.info(f"Simulation not finished for {structure}")
-            return (None, None), (None, None)
-        else:
+        if ("Simulation finished,  0 warnings\n" in data):
             for line in data:
                 if "Note: The heat of adsorption Q=-H" in line:
                     Q_line = data[data.index(line) - 2]
@@ -40,5 +42,18 @@ def read_gcmc(structure, unitcell, T, P, **kwargs):
                 elif "Average loading absolute [mol/kg framework]" in line:
                     L = float(line.split()[5])
                     L_dev = float(line.split()[7])
+        elif ("Simulation finished,  1 warnings\n" in data) and ("WARNING: THE SYSTEM HAS A NET CHARGE \n" in data):
+            for line in data:
+                if "Note: The heat of adsorption Q=-H" in line:
+                    Q_line = data[data.index(line) - 2]
+                    Q = float(Q_line.split()[0])
+                    Q_dev = float(Q_line.split()[2])
+                elif "Average loading absolute [mol/kg framework]" in line:
+                    L = float(line.split()[5])
+                    L_dev = float(line.split()[7])
+        else:
+            warnings.warn("Simulation not finished")
+            logging.info(f"Simulation not finished for {structure}")
+            return (None, None), (None, None)
     # L (mmol/g) and Q (J/mmol)
     return (L, L_dev), (Q, Q_dev)
