@@ -3,7 +3,7 @@ import warnings
 import logging
 
 def read_henry(structure, unitcell, ExternelTemperature, **kwargs):
-    output_path = "Output/System_0/output_"+ structure + "_" + str(unitcell[0]) + "." + str(unitcell[1]) + "." + str(unitcell[2]) + "_" + str(ExternelTemperature) + ".000000_0.data"
+    output_path = "Output/System_0/output_%s_%d.%d.%d_%lf_0.data" %(structure, unitcell[0], unitcell[1], unitcell[2], ExternelTemperature)
     if not os.path.exists(output_path):
         return None, None
     with open (output_path, 'r') as fi:
@@ -20,7 +20,7 @@ def read_henry(structure, unitcell, ExternelTemperature, **kwargs):
     return kh, kh_dev
 
 def read_gcmc(structure, unitcell, T, P, **kwargs):
-    output_path = "Output/System_0/output_"+ structure + "_" + str(unitcell[0]) + "." + str(unitcell[1]) + "." + str(unitcell[2]) + "_" + str(T) + ".000000_" + str(P) + ".data"
+    output_path = "Output/System_0/output_%s_%d.%d.%d_%lf_%lg.data" %(structure, unitcell[0], unitcell[1], unitcell[2], T, P)
     if not os.path.exists(output_path):
         print(os.getcwd())
         print(f"{output_path} not exist")
@@ -33,8 +33,8 @@ def read_gcmc(structure, unitcell, T, P, **kwargs):
             return (None, None), (None, None)
         else:
             for line in data:
-                if "Enthalpy of adsorption:" in line:
-                    Q_line = data[data.index(line) + 10]
+                if "Note: The heat of adsorption Q=-H" in line:
+                    Q_line = data[data.index(line) - 2]
                     Q = float(Q_line.split()[0])
                     Q_dev = float(Q_line.split()[2])
                 elif "Average loading absolute [mol/kg framework]" in line:

@@ -1,12 +1,12 @@
 # generate shell script for RASPA
 
-def local(raspa_dir, zeopath, zeo_cal, radius, n_points, structure, **kwargs):
+def local(raspa_dir, raspa_bin, zeopath, zeo_cal, radius, n_points, structure, **kwargs):
     str_out = ""
     str_out += "#! /bin/sh -f\n"
     if zeo_cal:
         str_out += "%s -ha -block %s %s %s\n\n" %(zeopath, radius, n_points, structure)
     str_out += "export RASPA_DIR=%s\n" %raspa_dir
-    str_out += "$RASPA_DIR/bin/simulate simulation.input\n"
+    str_out += "%s/simulate simulation.input\n" %raspa_bin
     return str_out
 
 def fidis(time, mem, raspa_dir, lib_dir, raspa_bin, zeopath, zeo_cal, radius, n_points, structure, **kwargs):

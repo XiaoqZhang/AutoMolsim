@@ -17,7 +17,7 @@ from raspa_molsim.postprocessing import *
 def run_preprocessing(cfg: DictConfig) -> None:
      
     assert cfg.machine.name in ["local", "fidis", "lsmosrv"], "Unknown machine!"
-    assert cfg.task.name in ["henry", "nvt", "gcmc", "minimization"], "Unknown task!"
+    assert cfg.task.name in ["zeopp" ,"henry", "nvt", "gcmc", "minimization"], "Unknown task!"
 
     # create output directory
     if not os.path.exists(cfg.out_dir):
