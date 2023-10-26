@@ -3,7 +3,7 @@ shifted
 # general rule tailcorrections
 yes
 # number of defined interactions
-113
+114
 # type interactions, parameters.    IMPORTANT: define generic matches first
 Ac	LENNARD_JONES	16.608	3.0985
 Ag	LENNARD_JONES	18.1178	2.8045
@@ -111,6 +111,7 @@ Zr	LENNARD_JONES	34.7257	2.7832
 O_co2	LENNARD_JONES	79.0    3.05
 C_co2	LENNARD_JONES	27.0    2.80
 N_n2    LENNARD_JONES   36.0    3.31
+M_n2    None
 CH4_sp3 LENNARD_JONES   148.0   3.73
 N1_n2o  LENNARD_JONES   57.6    3.13
 N2_n2o  LENNARD_JONES   57.7    3.13
