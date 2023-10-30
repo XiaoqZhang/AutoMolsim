@@ -51,8 +51,9 @@ def nvt(structure, unitcell, NumberOfCycles, NumberOfInitializationCycles, Resta
     return str_out
 
 # Grand Canonical Monte Carlo (GCMC)
-def gcmc(structure, unitcell, NumberOfCycles, NumberOfInitializationCycles, Forcefield, T, P, MoleculeName, MoleculeDefinition, block, **kwargs):
+def gcmc(structure, unitcell, NumberOfCycles, NumberOfInitializationCycles, Forcefield, T, P, MoleculeName, MoleculeDefinition, MolFraction, block, **kwargs):
     # T and P are in (K) and (Pa) respectively
+    num_component = len(MoleculeName)
     str_out = ""
     str_out += "SimulationType               MonteCarlo\n"
     str_out += "NumberOfCycles               %i\n" %NumberOfCycles
@@ -66,17 +67,19 @@ def gcmc(structure, unitcell, NumberOfCycles, NumberOfInitializationCycles, Forc
     str_out += "UseChargesFromCIFFile   yes\n"
     str_out += "UnitCells               %i %i %i\n"%(unitcell[0],unitcell[1],unitcell[2])
     if (block is True):
-        str_out += "            BlockPockets                 %s\n" %block
-        str_out += "            BlockPocketsFilename         %s\n" %structure
+        str_out += "BlockPockets                 %s\n" %block
+        str_out += "BlockPocketsFilename         %s\n" %structure
     str_out += "ExternalTemperature     %s\n" %str(T)
     str_out += "ExternalPressure        %s\n\n" %str(P)
-    str_out += "Component 0 MoleculeName                 %s\n" %MoleculeName
-    str_out += "            MoleculeDefinition           %s\n" %MoleculeDefinition
-    str_out += "            TranslationProbability       1.0\n"
-    str_out += "            RotationProbability          1.0\n"
-    str_out += "            ReinsertionProbability       1.0\n"
-    str_out += "            SwapProbability              1.0\n"
-    str_out += "            CreateNumberOfMolecules      0\n"
+    for i, com in enumerate(MoleculeName):
+        str_out += "Component %i MoleculeName                 %s\n" %(i, com)
+        str_out += "            MoleculeDefinition           %s\n" %MoleculeDefinition
+        str_out += "            MolFraction                  %s\n" %MolFraction[i]
+        str_out += "            TranslationProbability       1.0\n"
+        str_out += "            RotationProbability          1.0\n"
+        str_out += "            ReinsertionProbability       1.0\n"
+        str_out += "            SwapProbability              1.0\n"
+        str_out += "            CreateNumberOfMolecules      0\n"
     return str_out
 
 # Energy grid

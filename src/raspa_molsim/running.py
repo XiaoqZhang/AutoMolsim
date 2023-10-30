@@ -142,14 +142,22 @@ def run_postprocessing(cfg: DictConfig) -> None:
         )
                 
 
-    logging.info(f"Saving results in {cfg.out_dir}")
+    logging.info(f"Saving results in {cfg.out_dir}. \n")
     df.to_csv(
         os.path.join(cfg.out_dir, "results.csv"),
         index=False
-    )  
+    )
   
     # write unfinished cifs
     if len(unfinished) > 0:
+        logging.info(f"{len(unfinished)} structures unfinished. \n")
         with open(os.path.join(cfg.out_dir, "unfinished"), "w") as fp:
             for struc in unfinished:
                 fp.write("%s\n" %struc)
+        os.mkdir(os.path.join(cfg.out_dir, "unfinished"))
+        for i in unfinished:
+            shutil.copytree(
+                os.path.join(cfg.out_dir, i),
+                os.path.join(cfg.out_dir, "unfinished", i)
+            )
+        
