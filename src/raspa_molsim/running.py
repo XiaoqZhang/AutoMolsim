@@ -130,10 +130,10 @@ def run_postprocessing(cfg: DictConfig) -> None:
                 # get the output folder for each structure
                 sim_dir = os.path.join(cfg.out_dir, structure)
                 os.chdir(sim_dir)
-                if len(com) == 1:
-                    j = i
+                if len(cfg.task.MoleculeName) > 1:
+                    j = i + 1
                 else:
-                    j = i+1
+                    j = i
                 (l, l_dev), (q, q_dev) = read_gcmc(structure, unitcell, i, j, **cfg.task)
                 loadings.append(l)
                 loading_devs.append(l_dev)
@@ -147,8 +147,9 @@ def run_postprocessing(cfg: DictConfig) -> None:
                 [loadings, loading_devs, qs, q_devs]
             ):
                 df[col] = values
+        
+        unfinished = np.unique(unfinished)
                 
-
     logging.info(f"Saving results in {cfg.out_dir}. \n")
     df.to_csv(
         os.path.join(cfg.out_dir, "results.csv"),
@@ -161,10 +162,10 @@ def run_postprocessing(cfg: DictConfig) -> None:
         with open(os.path.join(cfg.out_dir, "unfinished"), "w") as fp:
             for struc in unfinished:
                 fp.write("%s\n" %struc)
-        os.mkdir(os.path.join(cfg.out_dir, "unfinished"))
+        os.mkdir(os.path.join(cfg.out_dir, "newround"))
         for i in unfinished:
             shutil.copytree(
                 os.path.join(cfg.out_dir, i),
-                os.path.join(cfg.out_dir, "unfinished", i)
+                os.path.join(cfg.out_dir, "newround", i)
             )
         
