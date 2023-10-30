@@ -116,30 +116,33 @@ def run_postprocessing(cfg: DictConfig) -> None:
         )
                 
     elif cfg.task.name == "gcmc":
-        loadings, loading_devs, qs, q_devs = [], [], [], []
-        for structure in tqdm(structures):
-            unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"), cfg.task.CutOffVDW)
-
-            # get the output folder for each structure
-            sim_dir = os.path.join(cfg.out_dir, structure)
-            os.chdir(sim_dir)
-            (l, l_dev), (q, q_dev) = read_gcmc(structure, unitcell, **cfg.task)
-            loadings.append(l)
-            loading_devs.append(l_dev)
-            qs.append(q)
-            q_devs.append(q_dev)
-            if l is None:
-                unfinished.append(structure)
-        
         df = pd.DataFrame(
             {
-                "cif": structures,
-                "%s_uptake_%s" %(cfg.task.MoleculeName, cfg.task.P): loadings,
-                "%s_uptake_%s_dev" %(cfg.task.MoleculeName, cfg.task.P): loading_devs,
-                "%s_enthalpy_%s" %(cfg.task.MoleculeName, cfg.task.P): qs,
-                "%s_enthalpy_%s_dev" %(cfg.task.MoleculeName, cfg.task.P): q_devs
+                "cif": structures
             }
         )
+        
+        for i, com in enumerate(cfg.task.MoleculeName):
+            loadings, loading_devs, qs, q_devs = [], [], [], []
+            for structure in tqdm(structures):
+                unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"), cfg.task.CutOffVDW)
+
+                # get the output folder for each structure
+                sim_dir = os.path.join(cfg.out_dir, structure)
+                os.chdir(sim_dir)
+                (l, l_dev), (q, q_dev) = read_gcmc(structure, unitcell, i, **cfg.task)
+                loadings.append(l)
+                loading_devs.append(l_dev)
+                qs.append(q)
+                q_devs.append(q_dev)
+                if l is None:
+                    unfinished.append(structure)
+
+            for col, values in zip(
+                ["%s_uptake_%s" %(cfg.task.MoleculeName[i], cfg.task.P), "%s_uptake_%s_dev" %(cfg.task.MoleculeName[i], cfg.task.P), "%s_enthalpy_%s" %(cfg.task.MoleculeName[i], cfg.task.P), "%s_enthalpy_%s_dev" %(cfg.task.MoleculeName[i], cfg.task.P)],
+                [loadings, loading_devs, qs, q_devs]
+            ):
+                df[col] = values
                 
 
     logging.info(f"Saving results in {cfg.out_dir}. \n")
