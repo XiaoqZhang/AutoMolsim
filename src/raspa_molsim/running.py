@@ -130,7 +130,11 @@ def run_postprocessing(cfg: DictConfig) -> None:
                 # get the output folder for each structure
                 sim_dir = os.path.join(cfg.out_dir, structure)
                 os.chdir(sim_dir)
-                (l, l_dev), (q, q_dev) = read_gcmc(structure, unitcell, i, **cfg.task)
+                if len(com) == 1:
+                    j = i
+                else:
+                    j = i+1
+                (l, l_dev), (q, q_dev) = read_gcmc(structure, unitcell, i, j, **cfg.task)
                 loadings.append(l)
                 loading_devs.append(l_dev)
                 qs.append(q)
