@@ -8,4 +8,5 @@ conf/
 
 # Python & Packaging
 src/__pycache__/*
+src/raspa_molsim/__pycache__/*
 *.egg-info/

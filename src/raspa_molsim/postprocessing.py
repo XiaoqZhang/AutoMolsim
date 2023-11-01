@@ -50,16 +50,16 @@ def read_gcmc(structure, unitcell, no_component, q_no_component, T, P, **kwargs)
         elif ("Simulation finished,  1 warnings\n" in data) and ("WARNING: THE SYSTEM HAS A NET CHARGE \n" in data):
             for no, line in enumerate(data):
                 if "Note: The heat of adsorption Q=-H" in line:
+                    q_counter += 1
                     if q_counter == q_no_component:
                         Q_line = data[no - 2]
                         Q = float(Q_line.split()[0])
                         Q_dev = float(Q_line.split()[2])
-                        q_counter += 1
                 elif "Average loading absolute [mol/kg framework]" in line:
+                    l_counter += 1
                     if l_counter == no_component:
                         L = float(line.split()[5])
                         L_dev = float(line.split()[7])
-                        l_counter += 1
         else:
             warnings.warn("Simulation not finished")
             logging.info(f"Simulation not finished for {structure}")

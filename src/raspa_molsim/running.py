@@ -125,6 +125,7 @@ def run_postprocessing(cfg: DictConfig) -> None:
         for i, com in enumerate(cfg.task.MoleculeName):
             loadings, loading_devs, qs, q_devs = [], [], [], []
             for structure in tqdm(structures):
+                print(structure)
                 unitcell = extract_geometry(os.path.join(cfg.cif_dir, structure+".cif"), cfg.task.CutOffVDW)
 
                 # get the output folder for each structure
