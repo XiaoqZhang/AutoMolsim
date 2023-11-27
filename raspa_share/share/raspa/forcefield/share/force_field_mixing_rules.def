@@ -3,7 +3,7 @@ shifted
 # general rule tailcorrections
 yes
 # number of defined interactions
-114
+115
 # type interactions, parameters.    IMPORTANT: define generic matches first
 Ac	LENNARD_JONES	16.608	3.0985
 Ag	LENNARD_JONES	18.1178	2.8045
