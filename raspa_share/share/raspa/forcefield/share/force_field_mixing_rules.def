@@ -117,6 +117,7 @@ N1_n2o  LENNARD_JONES   57.6    3.13
 N2_n2o  LENNARD_JONES   57.7    3.13
 O_n2o   LENNARD_JONES   71.3    2.91
 Ow      LENNARD_JONES   93.20   3.159
+Hw      None
 S_h2s   LENNARD_JONES   122     3.60
 H_h2s   LENNARD_JONES   50      2.5
 # general mixing rule for Lennard-Jones
