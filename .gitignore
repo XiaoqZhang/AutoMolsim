@@ -4,7 +4,6 @@ test_out/
 outputs/
 
 # change of configurations
-conf/
 
 # Python & Packaging
 src/__pycache__/*

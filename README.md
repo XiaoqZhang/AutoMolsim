@@ -8,7 +8,7 @@
 # How to use
 
 - Configure your simulation by files in `conf` folder
-- Run the program by `python run.py`
+- Run the program by `python main.py`
 - If there are too many structures and you want to split the jobs into batchs, you can use ` for f in *; do d=dir_$(printf %03d $((i/1000+1)));mkdir -p $d; mv "$f" $d; let i++; done`
 
 # molsim_workflow
