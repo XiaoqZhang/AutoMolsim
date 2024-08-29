@@ -1,0 +1,10 @@
+defaults:
+  - _self_
+  - machine: fidis
+  - task: henry
+  - zeo_params: co2
+
+mode: post
+  
+cif_dir: /scratch/xiazhang/proj_tc/zif
+out_dir: /scratch/xiazhang/proj_tc/zif_co2_kh
